@@ -26,8 +26,6 @@ async def main():
         reaction_counts = {}
         first_post_date = None
 
-        print(f"🚀 جاري تحليل @{channel_username}...")
-
         async for message in client.iter_messages(entity, reverse=True):
             if not first_post_date:
                 first_post_date = message.date
@@ -64,7 +62,6 @@ async def main():
                         break
 
             if total_posts % 100 == 0:
-                print(f"📉 تمت معالجة {total_posts} منشور...")
                 await asyncio.sleep(random.uniform(0.5, 1.0))
 
         avg_views = total_views / total_posts if total_posts > 0 else 0
@@ -92,7 +89,7 @@ async def main():
             report += f" - {key}: {value}\n"
 
         report += f"{'-'*45}\n"
-        report += "✨ تفاعلات الجمهور (حسب الأكثر استخداماً):\n"
+        report += "✨ تفاعلات المتابعين:\n"
 
         sorted_reactions = sorted(reaction_counts.items(), key=lambda x: x[1], reverse=True)
         for emo, count in sorted_reactions:
@@ -100,8 +97,6 @@ async def main():
 
         file_name = f"final_report_{channel_username}.txt"
         with open(file_name, "w", encoding="utf-8") as f:
-            f.write(report)
-
-        print(f"\n✅ تم الحفظ بنجاح! اسم الملف: {file_name}")
+            f.write(report
 
 client.loop.run_until_complete(main())
